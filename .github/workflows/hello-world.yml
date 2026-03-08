@@ -4,7 +4,21 @@ on:
     workflow_dispatch:
 
 jobs:
-    say-hello-world:
+    say-hello-world-inline-bash:
         runs-on: ubuntu-24.04
         steps: 
             - run: echo "Hello World"
+    
+    say-hello-inline-python:
+        runs-on: ubuntu-24.04
+        steps: 
+            - run: print("Hello World")
+              shell: python
+    
+    say-hello-action:
+        runs-on: ubuntu-24.04
+        steps: 
+            - uses: actions/hello-world-javascript-action@main
+              with:
+                who-to-greet: World
+
