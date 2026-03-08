@@ -1,4 +1,4 @@
-name: hello-world-github
+name: executing-jobs-in-sequence
 
 on:
     workflow_dispatch:
