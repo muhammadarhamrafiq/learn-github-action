@@ -1,0 +1,30 @@
+name: "Passing Variables and Data between the Jobs and Setps"
+
+on:
+    workflow_dispatch:
+
+jobs:
+    producer:
+        runs-on: ubuntu-24.04
+        outputs:
+            foo: ${{ steps.generate-foo.outputs.foo }}
+        steps:
+            - name: step1
+              id: generate-foo
+              run: |
+                foo=bar
+                echo "foo=${foo}" >> "$GITHUB_OUTPUT"
+                echo "FOO=${foo}" >> "$GITHUB_ENV"
+            - name: step2
+              run: |
+                echo "FOO (via the last step): $FOO"
+                echo "foo (via output): ${{ steps.generate-foo.outputs.foo }}"
+
+    consument:
+        runs-on: ubuntu-24.04
+        needs: producer
+        steps:
+            - name: step-1
+              run: |
+                echo "FOO (via the env): ${FOO:-<UNSET>}"
+                echo  "foo (via the output): ${{ needs.producer.outputs.foo }}"
