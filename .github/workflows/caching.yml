@@ -16,14 +16,14 @@ jobs:
                 key: demo-cache-v1
             
             - name: Populate Cache Directory
-              if: steps.demo-cache.outputs.hit != 'true'
+              if: steps.demo-cache.outputs.cache-hit != 'true'
               run: |
                 echo "Cache miss - generating Content"
                 mkdir demo-cache
-                data > demo-cache/timestamp.txt
+                date > demo-cache/timestamp.txt
         
             - name: Save Cache
-              if: steps.demo-cache.outputs.hit != 'true'
+              if: steps.demo-cache.outputs.cache-hit != 'true'
               uses: actions/cache@v4
               with:
                 path: demo-cache
@@ -31,6 +31,6 @@ jobs:
             
             - name: Verify Cache Status
               run: |
-                echo "cache hit? -> ${{ steps.demo-cache.outputs.hit }}"
+                echo "cache hit? -> ${{ steps.demo-cache.outputs.cache-hit }}"
                 cat demo-cache/timestamp.txt
             
