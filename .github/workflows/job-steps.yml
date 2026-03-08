@@ -1,0 +1,33 @@
+name: hello-world-github
+
+on:
+    workflow_dispatch:
+
+jobs:
+    job1:
+        runs-on: ubuntu-24.04
+        steps: 
+            - run: echo "Job 1 Executes"
+        
+    
+    job2:
+        runs-on: ubuntu-24.04
+        needs:
+           - job1
+        steps: 
+            - run: echo "Job 2 Executed"
+    
+    job3:
+        runs-on: ubuntu-24.04
+        needs:
+            - job1
+        steps: 
+            - run: echo "Job 3 executed"
+
+    job4:
+        runs-on: ubuntu-24.04
+        needs:
+            - job2
+            - job3
+        steps: 
+            - run: echo "Job 4 executed"
