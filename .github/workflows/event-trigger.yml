@@ -1,0 +1,26 @@
+name: 'Triggering Events'
+
+on:
+    push:
+        branches:
+            - "example-branch/*"
+    pull_request:
+        types:
+            - opened
+            - synchronize
+            - reopened
+        paths:
+            - "pull/readMe.md"
+            - "!pull/readMe.txt"
+    schedule:
+        - cron: '0 0 * * *'
+    
+jobs:
+    echo-event:
+        runs-on: 'ubuntu-24.04'
+        steps:
+            - name: "Print full Event Json"
+              run: |
+                echo "=== GITHUB_EVENT_NAME payload ==="
+                cat "$GITHUB_EVENT_PATH"
+                
