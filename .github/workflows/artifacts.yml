@@ -1,0 +1,31 @@
+name: "Artifacts"
+
+on:
+    workflow_dispatch:
+
+jobs:
+    artifact-producer:
+        runs-on: ubuntu-20.04
+        steps:
+
+            - name: create-artifact
+              run: |
+                mkdir -p artifacts
+                echo "Artifact Content" >> "artifacts/artifact.txt"
+            - uses: actions/upload-artifact@v4
+              with:
+                name: my-artifact
+                path: artifacts/artifact.txt
+    
+    artifact-consumer:
+        runs-on: ubuntu-20.04
+        needs: artifact-producer
+        steps:
+          - uses: actions/download-artifact@v5
+            with:
+                name: my-artifact
+                path: artifacts
+          - name: Display artifact
+            run: |
+                ls -R artifacts/artifact.txt
+                cat artifacts/artifact.txt
