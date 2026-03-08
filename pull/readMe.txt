@@ -1,0 +1,1 @@
+This is the file on changes in which the pull_request does not trigger the workflow
